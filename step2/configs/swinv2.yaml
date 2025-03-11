@@ -1,0 +1,73 @@
+model_name              : "swin"
+size_model              : "large"
+config                  : "finetune_imagenet"
+gpu_index               : "0"
+
+eval_after              : 0
+save_ckpt               : True
+
+pretrain_swin           : True
+normalization           : "imagenet"
+
+batch_size_sim          : 32
+batch_size_train        : 16
+batch_size_valid        : 16
+batch_size_test         : 16
+
+depths                  : [ 2, 2, 18, 2 ]
+embed_dim               : 192
+num_heads               : [ 6, 12, 24, 48 ]
+window_size             : 24
+img_size                : 384
+patch_size              : 4
+mask_patch_size         : 32
+mask_ratio              : 0.6
+encoder_stride          : 32
+in_chans                : 3
+pretrained_window_sizes : [ 12, 12, 12, 6 ]
+dim_head_in             : 1536
+dim_embed               : 1536
+
+dataset                 : "apacc"
+path_images_train       : "/path/to/SC3P/trainset"
+path_images_test        : "/path/to/SC3P/testset"
+path_labels             : "/path/to/k_folders/labels"
+fold                    : 1
+device                  : 'cpu'
+
+lr                      : 0.000005
+weight_decay            : 0.05
+scheduler               : True
+frequency_reweight      : False
+epochs                  : 40
+loss                    : 'ce'
+num_classes             : 2
+
+display_loss_freq       : 20
+validate_every          : 1
+save_every              : 1
+eval_valid              : True
+
+num_workers             : 16
+num_workers_valid       : 16
+num_workers_test        : 16
+persistent_workers      : True
+persistent_workers_val  : True
+persistent_workers_test : True
+
+name_scheduler          : 'constant'
+use_scheduler           : True
+num_warmup_steps        : 20000
+
+save_dir                : '/path/to/save_dir'
+
+path_swin_pretrained    : '/path/to/swinv2_large_patch4_window12to24_192to384_22kto1k_ft.pth'
+
+proba_flip              : 0.5
+proba_crop              : 0.5
+proba_elastic           : 0.2
+
+use_loss_ce             : True
+use_weight_ce           : True
+use_loss_focal          : False
+gamma                   : 2.0
