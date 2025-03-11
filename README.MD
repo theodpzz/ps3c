@@ -1,4 +1,4 @@
-### PS3C: An Ensemble-based Two-step Framework for Classification of Pep Smear Cell Images 🔬🧬
+### An Ensemble-based Two-step Framework for Classification of Pep Smear Cell Images 🔬🧬
 Official implementation for the challenge paper "PS3C: An Ensemble-based Two-step Framework for Classification of Pep Smear Cell Images".
 
 Submission can be found: 
