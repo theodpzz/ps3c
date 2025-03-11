@@ -35,6 +35,10 @@ To train the model, run the following command:
 python main.py
 ```
 
+### Acknowledgments
+
+We acknowledge [Kupas et al. 2024](https://www.nature.com/articles/s41597-024-03596-3) for making the APACC dataset available.
+
 ## Citation
 
 > [!IMPORTANT]  
