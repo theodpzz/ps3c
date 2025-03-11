@@ -3,7 +3,6 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 from transformers import ConvNextV2ForImageClassification
-from .modules.loss import CombinedLoss
 
 class ConvNeXtV2Backbone(nn.Module):
     def __init__(self, args):
