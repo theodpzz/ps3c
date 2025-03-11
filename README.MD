@@ -42,7 +42,7 @@ We acknowledge [Kupas et al. 2024](https://www.nature.com/articles/s41597-024-03
 ## Citation
 
 > [!IMPORTANT]  
-> This project is based on the work by Di Piazza et al. If you use this code in your research, please cite the following paper:
+> This project is based on the work by Di Piazza et al. If you use this code in your research, we would appreciate reference to the following paper:
 
 ```BibTeX
 @inproceedings{dipiazza2025ps3c,
