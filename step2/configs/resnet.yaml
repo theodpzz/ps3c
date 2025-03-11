@@ -1,0 +1,59 @@
+model_name              : "resnet"
+size                    : "18"
+dim_embed               : 512
+gpu_index               : "0"
+layer                   : 2
+
+eval_after              : 0
+save_ckpt               : True
+
+batch_size_sim          : 32
+batch_size_train        : 32
+batch_size_valid        : 32
+batch_size_test         : 32
+
+dataset                 : "apacc"
+normalization           : "imagenet"
+img_size                : 256
+path_images_train       : "/path/to/PS3C/trainset"
+path_images_test        : "/path/to/PS3C/validset"
+path_labels             : "/path/to/k_folders/labels"
+fold                    : 1
+device                  : 'cpu'
+
+lr                      : 0.000005
+weight_decay            : 0.01
+scheduler               : True
+frequency_reweight      : False
+epochs                  : 100
+loss                    : 'ce'
+num_classes             : 2
+
+display_loss_freq       : 20
+validate_every          : 1
+save_every              : 1
+eval_valid              : True
+
+num_workers             : 16
+num_workers_valid       : 16
+num_workers_test        : 16
+persistent_workers      : True
+persistent_workers_val  : True
+persistent_workers_test : True
+
+name_scheduler          : 'constant'
+use_scheduler           : True
+num_warmup_steps        : 1000
+
+save_dir                : '/path/to/save_dir'
+
+path_resnet             : '/path/to/resnet18-f37072fd.pth'
+
+proba_flip              : 0.5
+proba_crop              : 0.5
+proba_elastic           : 0.2
+
+use_loss_ce             : True
+use_weight_ce           : True
+use_loss_focal          : False
+gamma                   : 2.0
