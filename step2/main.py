@@ -195,9 +195,6 @@ def main(args):
     # model
     model = Model(args)
 
-    # freeze backbone for the first epoch
-    model.freeze_backbone()
-
     # optimizer, scheduler
     optimizer, lr_scheduler = get_optimizer_scheduler(args, model, num_batches=args.num_batches)
 
@@ -222,7 +219,5 @@ if __name__ == "__main__":
     args = argparse.Namespace(**params)
     args.yaml_file = yaml_file
 
-
-
-    # multi processing config
+    # train
     main(args)
