@@ -11,7 +11,7 @@ from .swin import SwinTransformerV2Backbone
 from .seresnext import SEResNeXtBackbone
 
 def get_backbone(args):
-    elif(args.model_name == "convnextv2"):
+    if(args.model_name == "convnextv2"):
         return ConvNeXtV2Backbone(args)
     elif(args.model_name == "swin"):
         return SwinTransformerV2Backbone(args)
