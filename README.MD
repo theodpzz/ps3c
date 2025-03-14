@@ -8,6 +8,7 @@ Pap Smear Cell Classification Challenge: [Kaggle Competition](https://www.kaggle
 ## Method Overview
 
 Step 1: Models are independently trained for binary classification to predict whether an image is rubbish or not. Final predictions are obtained by averaging the model scores. If the image is classified as non-rubbish, it proceeds to Step 2. 
+
 Step 2: Models are separately trained for multi-label classification to determine whether the input image contains a healthy cell, an unhealthy cell, or both. Final predictions are computed as the average of model predictions.
 
 <img src="https://github.com/theodpzz/ps3c/blob/main/figures/method_overview.png" alt="Method overview" width="900">
