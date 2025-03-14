@@ -69,7 +69,7 @@ class Trainer:
 
         # forward pass
         self.optimizer.zero_grad()
-        predictions, loss_forward = self.model(volumes, labels) # (batch_size, num_pathologies)
+        predictions, loss_forward = self.model(volumes, labels)
 
         # accumulate loss
         loss = loss_forward / self.accumulation_step
@@ -130,9 +130,7 @@ class Trainer:
           labels  = labels.to(self.device)
 
           loss, probabilities = self._run_batch_val(volumes, labels)
-          samples_names_valid.append(sample_names)
-          probabilities_valid.append(probabilities)
-          logs   = accum_log(logs, loss)
+          logs = accum_log(logs, loss)
           del volumes, labels     
 
         ## test step
@@ -141,9 +139,7 @@ class Trainer:
           labels  = labels.to(self.device)
 
           loss, probabilities = self._run_batch_test(volumes, labels)
-          samples_names_test.append(sample_names)
-          probabilities_test.append(probabilities)
-          logs   = accum_log(logs, loss)
+          logs = accum_log(logs, loss)
           del volumes, labels
 
         self.accum_log_(epoch, logs)
