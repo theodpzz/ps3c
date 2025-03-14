@@ -64,7 +64,7 @@ class Trainer:
 
         # forward pass
         self.optimizer.zero_grad()
-        predictions, loss_forward = self.model(volumes, labels) # (batch_size, num_pathologies)
+        predictions, loss_forward = self.model(volumes, labels)
 
         # accumulate loss
         loss = loss_forward / self.accumulation_step
