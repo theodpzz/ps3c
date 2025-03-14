@@ -1,7 +1,7 @@
-### An Ensemble-based Two-step Framework for Classification of Pep Smear Cell Images 🔬🧬
-Official implementation for the challenge paper "PS3C: An Ensemble-based Two-step Framework for Classification of Pep Smear Cell Images".
+### An Ensemble-based Two-step Framework for Classification of Pap Smear Cell Images 🔬🧬
+Official implementation for the challenge paper "An Ensemble-based Two-step Framework for Classification of Pap Smear Cell Images".
 
-Grand Challenge paper accepted at ISBI 2025.
+Grand Challenge paper accepted at ISBI 2025: [arXiv submission](https://arxiv.org/abs/2503.10312)
 
 ## Method Overview
 
@@ -47,7 +47,7 @@ We acknowledge [Kupas et al. 2024](https://www.nature.com/articles/s41597-024-03
 ```BibTeX
 @inproceedings{dipiazza2025ps3c,
   author    = {Di Piazza Theo  and Loic Boussel},
-  title     = {PS3C: An Ensemble-based Two-step Framework for Classification of Pep Smear Cell Images},
+  title     = {An Ensemble-based Two-step Framework for Classification of Pap Smear Cell Images},
   booktitle = {Proceedings of the IEEE International Symposium on Biomedical Imaging (ISBI)},
   year      = {2025},
   organization = {IEEE},
