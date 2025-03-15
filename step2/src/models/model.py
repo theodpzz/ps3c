@@ -42,7 +42,7 @@ class Model(nn.Module):
                     )
 
         # Softmax
-        self.softmax = nn.Softmax(dim=1)
+        self.activation = nn.Sigmoid()
 
         # loss function
         self.loss = CombinedLoss(args)
@@ -63,8 +63,8 @@ class Model(nn.Module):
         # classification head
         logits = self.classifier(x).squeeze(1)
         
-        # Softmax is usually applied in the loss function, but for clarity:
-        probabilities = self.softmax(logits)
+        # Activation function for probabilities
+        probabilities = self.activation(logits)
         
         # Compute loss
         loss = self.getloss(logits, labels)
