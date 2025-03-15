@@ -3,7 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 
 from torchvision import models
-from .modules.loss import CombinedLoss
+from .modules.loss import Loss
 
 from .resnet import ResNetBackbone
 from .convnextv2 import ConvNeXtV2Backbone
@@ -45,7 +45,7 @@ class Model(nn.Module):
         self.activation = nn.Sigmoid()
 
         # loss function
-        self.loss = CombinedLoss(args)
+        self.loss = Loss(args)
 
     def getloss(self, prediction, target):
         # compute BCE Loss
