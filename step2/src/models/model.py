@@ -11,13 +11,18 @@ from .swin import SwinTransformerV2Backbone
 from .seresnext import SEResNeXtBackbone
 
 def get_backbone(args):
-    if(args.model_name == "convnextv2"):
+    """Returns backbone of interest.
+    """
+    if args.model_name == "convnextv2":
         return ConvNeXtV2Backbone(args)
-    elif(args.model_name == "swin"):
+        
+    elif args.model_name == "swin":
         return SwinTransformerV2Backbone(args)
-    elif(args.model_name == "seresnext"):
+        
+    elif args.model_name == "seresnext":
         return SEResNeXtBackbone(args)
-    elif(args.model_name == "resnet"):
+        
+    elif args.model_name == "resnet":
         return ResNetBackbone(args)
 
 class Model(nn.Module):
