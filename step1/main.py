@@ -45,7 +45,6 @@ class Trainer:
         self.lr_scheduler      = lr_scheduler
         self.sizes             = (len(self.train_data), len(self.test_data))
         self.num_batches       = len(train_data)
-        self.learning_rates    = []
         self.args.size_train   = len(train_data)
         self.args.size_valid   = len(valid_data)
         self.args.size_test    = len(test_data)
@@ -63,7 +62,6 @@ class Trainer:
         step = i + epoch * self.num_batches
 
         # forward pass
-        self.optimizer.zero_grad()
         predictions, loss_forward = self.model(volumes, labels)
 
         # accumulate loss
@@ -75,11 +73,8 @@ class Trainer:
         # optimizer step
         if((i+1) % self.accumulation_step == 0):
             self.optimizer.step()
-            self.learning_rates.append(self.optimizer.param_groups[0]["lr"])
-
-            # scheduler step
-            if(self.args.use_scheduler): 
-              self.lr_scheduler.step()
+            self.lr_scheduler.step()
+            self.optimizer.zero_grad()
 
         loss_value = loss_forward.mean().detach().item()
         del volumes, labels, predictions, loss
