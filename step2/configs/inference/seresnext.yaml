@@ -1,24 +1,24 @@
+path_config             : "./results/step_2/seresnext/folder_config"
+epoch                   : -1
+
 model_name              : "seresnext"
 model_config            : "default"
 gpu_index               : "0"
-
+debug                   : False
 eval_after              : 0
+save_after              : 0
 save_ckpt               : True
 dim_embed               : 2048
-unfreeze_backbone_epoch : 2
 
-batch_size_sim          : 32
-batch_size_train        : 32
-batch_size_valid        : 32
-batch_size_test         : 32
+batch_size_sim          : 4
+batch_size_train        : 4
+batch_size_eval         : 4
+batch_size_test         : 4
 
 dataset                 : "apacc"
 normalization           : "imagenet"
 transform               : "normal"
-path_images_train       : "/path/to/SC3P/trainset"
-path_images_test        : "/path/to/SC3P/testset"
-path_labels             : "/path/to/k_folders/labels"
-fold                    : 1
+path_data               : "./data/SCP"
 device                  : 'cpu'
 
 img_size                : 288
@@ -42,7 +42,7 @@ scheduler               : True
 frequency_reweight      : False
 epochs                  : 40
 loss                    : 'ce'
-num_classes             : 1
+num_classes             : 2
 
 num_workers             : 16
 num_workers_valid       : 16
@@ -55,9 +55,9 @@ name_scheduler          : 'constant'
 use_scheduler           : True
 num_warmup_steps        : 4000
 
-save_dir                : '/path/to/save_dir'
+save_dir                : './results/step_2/seresnext'
 
-path_backbone_pretrain  : "/path/to/pytorch_model.bin"
+path_backbone_pretrain  : "./data/model/seresnextaa101d_32x8d.sw_in12k_ft_in1k_288/pytorch_model.bin"
 
 proba_flip              : 0.5
 proba_crop              : 0.5

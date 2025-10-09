@@ -12,18 +12,21 @@ def collate_fn(data):
 
     return image_name, image_tensor, labels
 
-def prepare_dataloader(trainset, validset, testset, args):
+def prepare_dataloader(dataset, args, split):
 
-    train_loader = DataLoader(trainset, batch_size=args.batch_size_train, 
-                                num_workers=args.num_workers, 
-                                persistent_workers=args.persistent_workers, collate_fn=collate_fn, shuffle=True)
-    
-    valid_loader = DataLoader(validset, batch_size=args.batch_size_valid, 
-                                num_workers=args.num_workers_valid, 
-                                persistent_workers=args.persistent_workers_val, collate_fn=collate_fn, shuffle=False)
-    
-    test_loader  = DataLoader(testset, batch_size=args.batch_size_test, 
-                                num_workers=args.num_workers_test, 
-                                persistent_workers=args.persistent_workers_test, collate_fn=collate_fn, shuffle=False)
+    if split == "train":
+        batch_size = args.batch_size_train
+        shuffle    = True
+    else:
+        batch_size = args.batch_size_test
+        shuffle    = False
 
-    return train_loader, valid_loader, test_loader
+    num_workers        = args.num_workers
+    persistent_workers = args.persistent_workers
+
+    dataloader = DataLoader(dataset, 
+                              batch_size=batch_size, 
+                              num_workers=num_workers, 
+                              persistent_workers=persistent_workers, collate_fn=collate_fn, shuffle=shuffle)
+    
+    return dataloader

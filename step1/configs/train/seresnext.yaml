@@ -1,0 +1,65 @@
+model_name              : "seresnext"
+model_config            : "default"
+gpu_index               : "0"
+debug                   : False
+eval_after              : 0
+save_ckpt               : True
+dim_embed               : 2048
+
+batch_size_sim          : 4
+batch_size_train        : 4
+batch_size_valid        : 4
+batch_size_test         : 4
+
+dataset                 : "apacc"
+normalization           : "imagenet"
+transform               : "normal"
+path_data               : "./data/SCP"
+device                  : 'cpu'
+
+img_size                : 288
+patches                 : 16
+dim                     : 768
+ff_dim                  : 3072
+num_heads               : 12
+num_layers              : 12
+attention_dropout_rate  : 0.0
+dropout_rate            : 0.1
+representation_size     : 768
+classifier              : 'token'
+positional_embedding    : '1d'
+in_channels             : 3
+load_repr_layer         : False
+classifier_type         : "token"
+
+lr                      : 0.00001
+weight_decay            : 0.05
+scheduler               : True
+frequency_reweight      : False
+epochs                  : 40
+loss                    : 'ce'
+num_classes             : 1
+
+num_workers             : 16
+num_workers_valid       : 16
+num_workers_test        : 16
+persistent_workers      : True
+persistent_workers_val  : True
+persistent_workers_test : True
+
+name_scheduler          : 'constant'
+use_scheduler           : True
+num_warmup_steps        : 4000
+
+save_dir                : './results/seresnext'
+
+path_backbone_pretrain  : "./data/model/seresnextaa101d_32x8d.sw_in12k_ft_in1k_288/pytorch_model.bin"
+
+proba_flip              : 0.5
+proba_crop              : 0.5
+proba_rotate            : 0.3
+proba_elastic           : 0.2
+
+use_loss_ce             : True
+use_weight_ce           : True
+use_loss_focal          : False

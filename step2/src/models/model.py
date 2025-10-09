@@ -1,14 +1,10 @@
-import torch
 import torch.nn as nn
-import torch.nn.functional as F
 
-from torchvision import models
-from .modules.loss import Loss
+from step1.src.models.modules.loss import Loss
 
-from .resnet import ResNetBackbone
-from .convnextv2 import ConvNeXtV2Backbone
-from .swin import SwinTransformerV2Backbone
-from .seresnext import SEResNeXtBackbone
+from step2.src.models.modules.convnextv2 import ConvNeXtV2Backbone
+from step2.src.models.modules.swinv2 import SwinTransformerV2Backbone
+from step2.src.models.modules.seresnext import SEResNeXtBackbone
 
 def get_backbone(args):
     """Returns backbone of interest.
@@ -21,9 +17,6 @@ def get_backbone(args):
         
     elif args.model_name == "seresnext":
         return SEResNeXtBackbone(args)
-        
-    elif args.model_name == "resnet":
-        return ResNetBackbone(args)
 
 class Model(nn.Module):
     def __init__(self, args):
@@ -53,7 +46,6 @@ class Model(nn.Module):
         self.loss = Loss(args)
 
     def getloss(self, prediction, target):
-        # compute BCE Loss
         loss = self.loss(prediction, target)
         return loss  
 

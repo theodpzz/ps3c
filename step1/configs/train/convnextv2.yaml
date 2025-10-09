@@ -1,31 +1,30 @@
-model_name              : "resnet"
-size                    : "18"
-dim_embed               : 512
+model_name              : "convnextv2"
+config_name             : 'base'
 gpu_index               : "0"
-layer                   : 2
+dim_embed               : 1024
+debug                   : False
 
 eval_after              : 0
 save_ckpt               : True
+save_after              : 0
 
-batch_size_sim          : 32
-batch_size_train        : 32
-batch_size_valid        : 32
-batch_size_test         : 32
+batch_size_sim          : 4
+batch_size_train        : 4
+batch_size_valid        : 4
+batch_size_test         : 4
 
 dataset                 : "apacc"
 normalization           : "imagenet"
-img_size                : 256
-path_images_train       : "/path/to/PS3C/trainset"
-path_images_test        : "/path/to/PS3C/validset"
-path_labels             : "/path/to/k_folders/labels"
-fold                    : 1
+img_size                : 384
+path_data               : "./data/SCP"
 device                  : 'cpu'
 
-lr                      : 0.000005
+lr_head                 : 0.0001
+lr                      : 0.000002
 weight_decay            : 0.01
 scheduler               : True
 frequency_reweight      : False
-epochs                  : 100
+epochs                  : 40
 loss                    : 'ce'
 num_classes             : 1
 
@@ -43,14 +42,15 @@ persistent_workers_test : True
 
 name_scheduler          : 'constant'
 use_scheduler           : True
-num_warmup_steps        : 1000
+num_warmup_steps        : 3000
 
-save_dir                : '/path/to/save_dir'
+save_dir                : './results/convnext'
 
-path_resnet             : '/path/to/resnet18-f37072fd.pth'
+path_convnext           : './data/model/convnextv2-base-22k-384'
 
 proba_flip              : 0.5
 proba_crop              : 0.5
+proba_rotate            : 0.3
 proba_elastic           : 0.2
 
 use_loss_ce             : True

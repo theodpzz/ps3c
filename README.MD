@@ -33,11 +33,25 @@ pip install -r requirements.txt
 
 ### Training
 
-To train the model, run the following command:
+To train the step 1, run the following command:
 
 ```bash
-python main.py
+python main.py train --yaml_file ./step1/configs/train/swinv2.yaml --step 1
 ```
+
+For the step 2, run the following command:
+
+```bash
+python main.py train --yaml_file ./step1/configs/train/swinv2.yaml --step 2
+```
+
+### Demo
+
+Validation and test sets per-class probabilities can be explored in the demo notebook.
+
+### Available resources
+
+Train weights for Step 1 and Step 2, as well as the per-class final predicted probabilities, are provided in the [HuggingFace repository](https://huggingface.co/theodpzz/ps3c).
 
 ### Acknowledgments
 

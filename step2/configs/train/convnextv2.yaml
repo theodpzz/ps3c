@@ -1,33 +1,32 @@
 model_name              : "convnextv2"
-config_name             : 'huge'
+config_name             : 'base'
 gpu_index               : "0"
-dim_embed               : 2816
+dim_embed               : 1024
+debug                   : False
 
 eval_after              : 0
 save_ckpt               : True
+save_after              : 0
 
-batch_size_sim          : 32
-batch_size_train        : 16
-batch_size_valid        : 16
-batch_size_test         : 16
+batch_size_sim          : 4
+batch_size_train        : 4
+batch_size_valid        : 4
+batch_size_test         : 4
 
 dataset                 : "apacc"
 normalization           : "imagenet"
 img_size                : 384
-path_images_train       : "/path/to/SC3P/trainset"
-path_images_test        : "/path/to/SC3P/testset"
-path_labels             : "/path/to/k_folders/labels"
-fold                    : 1
+path_data               : "./data/SCP"
 device                  : 'cpu'
 
 lr_head                 : 0.0001
-lr                      : 0.000003
+lr                      : 0.000002
 weight_decay            : 0.01
 scheduler               : True
 frequency_reweight      : False
 epochs                  : 40
 loss                    : 'ce'
-num_classes             : 1
+num_classes             : 2
 
 display_loss_freq       : 20
 validate_every          : 1
@@ -45,9 +44,9 @@ name_scheduler          : 'constant'
 use_scheduler           : True
 num_warmup_steps        : 3000
 
-save_dir                : '/path/to/save_dir'
+save_dir                : './results/step_2/convnext'
 
-path_convnext           : '/path/to/convnextv2-huge-22k-384'
+path_convnext           : './data/model/convnextv2-base-22k-384'
 
 proba_flip              : 0.5
 proba_crop              : 0.5

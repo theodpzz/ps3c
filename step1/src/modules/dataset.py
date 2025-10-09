@@ -8,36 +8,49 @@ from torch.utils.data import Dataset
 import torchvision.transforms as transforms
 from functools import partial
 
-def getDatasets(args):
+def getTrainDataset(args):
 
     # path with volumes
-    path_images_train = args.path_images_train
-    path_images_valid = args.path_images_train
-    path_images_test  = args.path_images_train
+    path_data    = args.path_data
+    path_images  = os.path.join(path_data, "trainset")
 
     # path with labels
-    path_labels = args.path_labels
-
-    # path with anomaly binary labels
-    path_labels           = os.path.join(args.path_labels, f"folder_{args.fold}")
-    path_labels_train     = os.path.join(path_labels, "train.csv")
-    path_labels_valid     = os.path.join(path_labels, "valid.csv")
-    path_labels_test      = os.path.join(path_labels, "test.csv")
+    path_labels = os.path.join(path_data, "isbi2025-ps3c-train-dataset.csv")
 
     # datasets
-    train = APACCDataset(args, path_images_train, path_labels_train, 
+    train = APACCDataset(args, 
+                         path_images, path_labels, 
                          batch_size=args.batch_size_train, split="train")
-    valid = APACCDataset(args, path_images_valid, path_labels_valid, 
-                         batch_size=args.batch_size_valid, split="valid")
-    test  = APACCDataset(args, path_images_test, path_labels_test, 
-                         batch_size=args.batch_size_test, split='test')
+    
+    # debug mode
+    if args.debug:
+        train.samples = train.samples[:500]
 
-    return train, valid, test
+    return train
+
+def getEvaluationDatasets(args):
+
+    # path with volumes
+    path_data    = args.path_data
+
+    path_images = os.path.join(path_data, "testset")
+    path_labels = os.path.join(path_data, "isbi2025-ps3c-test-dataset.csv")
+    test = APACCDataset(args, 
+                        path_images, path_labels, 
+                        batch_size=args.batch_size_test, split="test")
+
+    path_images = os.path.join(path_data, "evalset")
+    path_labels = os.path.join(path_data, "isbi2025-ps3c-eval-dataset.csv")
+    eval = APACCDataset(args, 
+                        path_images, path_labels, 
+                        batch_size=args.batch_size_eval, split="eval")    
+    return test, eval
 
 
 class APACCDataset(Dataset):
-    def __init__(self, args, path_images, path_labels, 
-                 batch_size, split, resize_dim=256):
+    def __init__(self, args, 
+                 path_images, path_labels, 
+                 batch_size, split):
 
         # device
         self.device = torch.device('cpu')
@@ -51,6 +64,7 @@ class APACCDataset(Dataset):
         self.batch_size    = batch_size
         self.num_classes   = args.num_classes
         self.img_size      = args.img_size
+        self.split         = split
 
         # paths of nii files
         self.samples = self.prepare_samples_apacc()
@@ -64,15 +78,11 @@ class APACCDataset(Dataset):
         self.samples = [x for x in self.samples if os.path.basename(x) in self.samples_names]
         
         # dataset statistics
-        if(self.args.normalization == "apacc"):
-            self.mean = (0.54366329, 0.69260935, 0.68979313)
-            self.std  = (0.35946042, 0.27779834, 0.26446231)
-        elif(self.args.normalization == "imagenet"):
-            self.mean = (0.485, 0.456, 0.406)
-            self.std  = (0.229, 0.224, 0.225)
+        self.mean = (0.485, 0.456, 0.406)
+        self.std  = (0.229, 0.224, 0.225)
 
         # transform
-        if(split == "train"):
+        if split == "train":
             self.transform = transforms.Compose([
                 transforms.ToTensor(),
                 transforms.RandomApply([transforms.RandomResizedCrop(size=(256, 256), scale=(0.7, 1.0),)], p=args.proba_crop),
@@ -134,12 +144,16 @@ class APACCDataset(Dataset):
         # extract id of patient
         image_name = os.path.basename(path_img_file)
 
-        # extract label as string
-        label_str = self.labels[self.labels.image_name == image_name].label.values[0]
+        if self.split == "train":
+            # extract label as string
+            label_str = self.labels[self.labels.image_name == image_name].label.values[0]
 
-        # create a one-hot tensor
-        labels = self.label_to_index[label_str]
-        labels = torch.tensor(labels)
+            # create a one-hot tensor
+            labels = self.label_to_index[label_str]
+            labels = torch.tensor(labels)
+        
+        else:
+            labels = torch.tensor([0])
 
         return image_name, labels
 

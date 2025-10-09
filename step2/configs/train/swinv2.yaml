@@ -1,0 +1,73 @@
+model_name              : "swin"
+size_model              : "base"
+config                  : "finetune_imagenet"
+gpu_index               : "0"
+debug                   : False
+
+eval_after              : 0
+save_after              : 0
+save_ckpt               : True
+
+pretrain_swin           : True
+normalization           : "imagenet"
+
+batch_size_sim          : 4
+batch_size_train        : 2
+batch_size_valid        : 2
+batch_size_test         : 2
+
+depths                  : [ 2, 2, 18, 2 ]
+embed_dim               : 128
+num_heads               : [ 4, 8, 16, 32 ]
+window_size             : 16
+img_size                : 256
+patch_size              : 4
+mask_patch_size         : 32
+mask_ratio              : 0.6
+encoder_stride          : 32
+in_chans                : 3
+pretrained_window_sizes : [0, 0, 0, 0]
+dim_head_in             : 1024
+dim_embed               : 1024
+
+dataset                 : "apacc"
+path_data               : "./data/SCP"
+device                  : 'cpu'
+
+lr                      : 0.000002
+weight_decay            : 0.05
+scheduler               : True
+frequency_reweight      : False
+epochs                  : 40
+loss                    : 'ce'
+num_classes             : 2
+
+display_loss_freq       : 20
+validate_every          : 1
+save_every              : 1
+eval_valid              : True
+
+num_workers             : 16
+num_workers_valid       : 16
+num_workers_test        : 16
+persistent_workers      : True
+persistent_workers_val  : True
+persistent_workers_test : True
+
+name_scheduler          : 'constant'
+use_scheduler           : True
+num_warmup_steps        : 20000
+
+save_dir                : './results/step_2/swinv2'
+
+path_swin_pretrained    : './data/model/swinv2_base_patch4_window16_256.pth'
+
+proba_flip              : 0.5
+proba_crop              : 0.5
+proba_rotate            : 0.3
+proba_elastic           : 0.2
+
+use_loss_ce             : True
+use_weight_ce           : True
+use_loss_focal          : False
+gamma                   : 2.0

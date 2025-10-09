@@ -1,13 +1,7 @@
 import os
-import json
 import yaml
-import argparse
 
-def parse_arguments():
-    parser = argparse.ArgumentParser(description='Script with parameters from JSON file')
-    parser.add_argument('--yaml_file', type=str, default='config/default.yaml', help='YAML file containing parameters')
-    return parser.parse_args()
-
+from datetime import datetime
 
 def parse_yaml(file_path):
     with open(file_path, 'r') as stream:
@@ -18,12 +12,19 @@ def parse_yaml(file_path):
 
 def make_output_dir(args):
 
-    output_dir       = args.save_dir
-    path_checkpoints = os.path.join(output_dir, "checkpoints")
-    path_logs        = os.path.join(output_dir, "logs")
-
+    output_dir = args.save_dir
+    output_dir = os.path.join(output_dir, datetime.now().strftime("%Y-%m-%d_%Hh%M"))
     os.makedirs(output_dir, exist_ok=True)
+
+    path_checkpoints   = os.path.join(output_dir, "checkpoints")
+    path_logs          = os.path.join(output_dir, "logs")
+    path_figures       = os.path.join(output_dir, "figures")
+
     os.makedirs(path_checkpoints, exist_ok=True)
     os.makedirs(path_logs, exist_ok=True)
+    os.makedirs(path_figures, exist_ok=True)
 
-    return output_dir
+    args.save_dir = output_dir
+
+    return args
+

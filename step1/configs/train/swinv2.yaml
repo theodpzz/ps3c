@@ -1,47 +1,46 @@
 model_name              : "swin"
-size_model              : "large"
+size_model              : "base"
 config                  : "finetune_imagenet"
 gpu_index               : "0"
+debug                   : False
 
 eval_after              : 0
 save_ckpt               : True
+save_after              : 0
 
 pretrain_swin           : True
 normalization           : "imagenet"
 
-batch_size_sim          : 32
-batch_size_train        : 16
-batch_size_valid        : 16
-batch_size_test         : 16
+batch_size_sim          : 4
+batch_size_train        : 2
+batch_size_valid        : 2
+batch_size_test         : 2
 
 depths                  : [ 2, 2, 18, 2 ]
-embed_dim               : 192
-num_heads               : [ 6, 12, 24, 48 ]
-window_size             : 24
-img_size                : 384
+embed_dim               : 128
+num_heads               : [ 4, 8, 16, 32 ]
+window_size             : 16
+img_size                : 256
 patch_size              : 4
 mask_patch_size         : 32
 mask_ratio              : 0.6
 encoder_stride          : 32
 in_chans                : 3
-pretrained_window_sizes : [ 12, 12, 12, 6 ]
-dim_head_in             : 1536
-dim_embed               : 1536
+pretrained_window_sizes : [0, 0, 0, 0]
+dim_head_in             : 1024
+dim_embed               : 1024
 
 dataset                 : "apacc"
-path_images_train       : "/path/to/SC3P/trainset"
-path_images_test        : "/path/to/SC3P/testset"
-path_labels             : "/path/to/k_folders/labels"
-fold                    : 1
+path_data               : "./data/SCP"
 device                  : 'cpu'
 
-lr                      : 0.000005
+lr                      : 0.000001
 weight_decay            : 0.05
 scheduler               : True
 frequency_reweight      : False
 epochs                  : 40
 loss                    : 'ce'
-num_classes             : 2
+num_classes             : 1
 
 display_loss_freq       : 20
 validate_every          : 1
@@ -59,12 +58,13 @@ name_scheduler          : 'constant'
 use_scheduler           : True
 num_warmup_steps        : 20000
 
-save_dir                : '/path/to/save_dir'
+save_dir                : './results/step_1/swinv2'
 
-path_swin_pretrained    : '/path/to/swinv2_large_patch4_window12to24_192to384_22kto1k_ft.pth'
+path_swin_pretrained    : './data/model/swinv2_base_patch4_window16_256.pth'
 
 proba_flip              : 0.5
 proba_crop              : 0.5
+proba_rotate            : 0.3
 proba_elastic           : 0.2
 
 use_loss_ce             : True

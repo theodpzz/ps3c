@@ -1,24 +1,24 @@
+import os
 import torch
 import torch.nn as nn
-import torch.nn.functional as F
 
-from torchvision import models
-from .modules.loss import Loss
+from step1.src.models.modules.loss import Loss
 
-from .resnet import ResNetBackbone
-from .convnextv2 import ConvNeXtV2Backbone
-from .swin import SwinTransformerV2Backbone
-from .seresnext import SEResNeXtBackbone
+from step1.src.models.modules.convnextv2 import ConvNeXtV2Backbone
+from step1.src.models.modules.swinv2 import SwinTransformerV2Backbone
+from step1.src.models.modules.seresnext import SEResNeXtBackbone
 
 def get_backbone(args):
-    if(args.model_name == "convnextv2"):
+    """Returns backbone of interest.
+    """
+    if args.model_name == "convnextv2":
         return ConvNeXtV2Backbone(args)
-    elif(args.model_name == "swin"):
+    
+    elif args.model_name == "swin":
         return SwinTransformerV2Backbone(args)
-    elif(args.model_name == "seresnext"):
+    
+    elif args.model_name == "seresnext":
         return SEResNeXtBackbone(args)
-    elif(args.model_name == "resnet"):
-        return ResNetBackbone(args)
 
 class Model(nn.Module):
     def __init__(self, args):
@@ -42,13 +42,18 @@ class Model(nn.Module):
                     )
 
         # Activation function
-        self.activation = nn.Softmax(dim=1)
+        self.activation = nn.Sigmoid()
 
         # loss function
         self.loss = Loss(args)
 
+    def load(self):
+        path_ckpt = os.path.join(self.args.path_config, f"checkpoints/checkpoint_{self.args.epoch}.pt")
+        ckpt      = torch.load(path_ckpt, map_location=self.args.device)["model_state_dict"]
+        msg       = self.load_state_dict(ckpt)
+        print(f'Model weights successfully loaded: {msg}')
+
     def getloss(self, prediction, target):
-        # compute BCE Loss
         loss = self.loss(prediction, target)
         return loss  
 
@@ -61,7 +66,10 @@ class Model(nn.Module):
         x = self.projection(x)
 
         # classification head
-        logits = self.classifier(x).squeeze(1)
+        logits = self.classifier(x)
+
+        # (b, 1) to (b, )
+        logits = logits.squeeze(1)
         
         # Activation function to get probabilities
         probabilities = self.activation(logits)
@@ -70,3 +78,22 @@ class Model(nn.Module):
         loss = self.getloss(logits, labels)
         
         return probabilities, loss
+    
+    def infer(self, images):
+
+        # extract features with resnet
+        x = self.backbone(images)
+
+        # projection head
+        x = self.projection(x)
+
+        # classification head
+        logits = self.classifier(x)
+
+        # (b, 1) to (b, )
+        logits = logits.squeeze(1)
+        
+        # Activation function to get probabilities
+        probabilities = self.activation(logits)
+
+        return probabilities
