@@ -33,7 +33,7 @@ pip install -r requirements.txt
 
 ### Training
 
-To train the step 1, run the following command:
+To train the step 1, run the following command (example for Swin):
 
 ```bash
 python main.py train --yaml_file ./step1/configs/train/swinv2.yaml --step 1
@@ -42,7 +42,7 @@ python main.py train --yaml_file ./step1/configs/train/swinv2.yaml --step 1
 For the step 2, run the following command:
 
 ```bash
-python main.py train --yaml_file ./step1/configs/train/swinv2.yaml --step 2
+python main.py train --yaml_file ./step2/configs/train/swinv2.yaml --step 2
 ```
 
 ### Demo
