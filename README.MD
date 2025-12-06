@@ -52,7 +52,7 @@ python main.py train --yaml_file ./step2/configs/train/swinv2.yaml --step 2
 
 Validation and test sets per-class probabilities can be explored in the demo notebook.
 
-#### 🔥 Available resources
+### 🔥 Available resources
 
 Train weights for Step 1 and Step 2, as well as the per-class final predicted probabilities, are provided in the [HuggingFace repository](https://huggingface.co/theodpzz/ps3c).
 
